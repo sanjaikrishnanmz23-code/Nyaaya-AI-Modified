@@ -40,13 +40,31 @@ export default function ServicesDirectory({ selectedServiceId }) {
           if (matched) setActiveService(matched);
         }
       } catch (err) {
-        console.error(err);
+        console.error('Services load error:', err);
       } finally {
         setLoading(false);
       }
     }
     load();
   }, [selectedServiceId]);
+
+  if (loading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="glass-card p-6 rounded-2xl space-y-4 animate-pulse">
+              <div className="h-4 bg-slate-800 rounded w-1/3" />
+              <div className="h-6 bg-slate-800 rounded w-2/3" />
+              <div className="h-4 bg-slate-800 rounded w-full" />
+              <div className="h-4 bg-slate-800 rounded w-4/5" />
+              <div className="h-10 bg-slate-800 rounded-xl w-full mt-4" />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   const filteredServices = services.filter((srv) => {
     const matchesCat =
@@ -113,6 +131,18 @@ export default function ServicesDirectory({ selectedServiceId }) {
       </div>
 
       {/* Services Grid */}
+      {filteredServices.length === 0 && (
+        <div className="py-16 text-center text-slate-400 space-y-3">
+          <p className="text-base font-semibold">No services found for "{search}".</p>
+          <p className="text-sm text-slate-500">Try broader keywords or browse all categories.</p>
+          <button
+            onClick={() => { setSearch(''); setSelectedCategory('all'); }}
+            className="mt-2 px-4 py-2 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-sm hover:bg-cyan-500/20 transition-all"
+          >
+            Clear filters
+          </button>
+        </div>
+      )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredServices.map((srv) => (
           <div

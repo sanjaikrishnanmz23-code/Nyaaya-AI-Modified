@@ -13,13 +13,31 @@ export default function EmergencyPage() {
         const data = await fetchEmergencyContacts();
         setContacts(data);
       } catch (err) {
-        console.error(err);
+        console.error('Emergency contacts load error:', err);
+        // contacts remain empty array; fallback handled inside fetchEmergencyContacts
       } finally {
         setLoading(false);
       }
     }
     load();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[...Array(8)].map((_, i) => (
+            <div key={i} className="glass-card p-6 rounded-2xl space-y-4 animate-pulse">
+              <div className="h-4 bg-slate-800 rounded w-1/3" />
+              <div className="h-6 bg-slate-800 rounded w-2/3" />
+              <div className="h-16 bg-slate-800 rounded w-full" />
+              <div className="h-10 bg-red-900/30 rounded-xl w-full" />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   const handleCopy = (number) => {
     navigator.clipboard.writeText(number);

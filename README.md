@@ -142,35 +142,75 @@ Nyaaya-AI/
 
 ## Getting Started
 
-### 1. Prerequisites
-- **Python 3.10+**
-- **Node.js 18+** & **npm**
+### Prerequisites
+- **Python 3.10+** — [Download](https://www.python.org/downloads/) *(check "Add to PATH" during install)*
+- **Node.js 18+** & **npm** — [Download](https://nodejs.org/)
 
-### 2. Backend Setup
+---
+
+### ⚡ Quick Start (Windows – One Click)
+
+Double-click **`START.bat`** in the project root folder.
+
+It will automatically:
+1. Install all Python backend dependencies (`pip install -r requirements.txt`)
+2. Install all frontend npm dependencies (`npm install` inside `frontend/`)
+3. Create a `.env` config file from the template
+4. Start the **backend** server (FastAPI on port 8000)
+5. Start the **frontend** server (Vite on port 5173)
+6. Open **http://localhost:5173** in your browser
+
+> **That's it!** The AI bot works out of the box without any API key — it uses a built-in bilingual knowledge base.
+
+---
+
+### 🛠 Manual Setup (any OS)
+
+Open **two separate terminals** in the project root folder.
+
+**Terminal 1 – Backend:**
 ```bash
-# Navigate to project root
-cd CitizenRights
-
-# Install Python dependencies
-pip install fastapi uvicorn pydantic python-dotenv
-
-# Start the FastAPI backend
-python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000 --reload
+# From the project root (CitizenRights/)
+pip install -r requirements.txt
+python -m uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload
 ```
-The API server starts at `http://127.0.0.1:8000`. Swagger API documentation is available at `http://127.0.0.1:8000/docs`.
 
-### 3. Frontend Setup
+**Terminal 2 – Frontend:**
 ```bash
-# In a separate terminal, navigate to frontend directory
 cd frontend
-
-# Install npm dependencies
 npm install
-
-# Start development server
 npm run dev
 ```
-Open `http://localhost:5173` in your browser.
+
+Then open **http://localhost:5173** in your browser.
+
+---
+
+### 🔑 Optional: Add a Live AI API Key
+
+The app works fully without any key (offline demo mode with a comprehensive statutory knowledge base).
+
+To enable live AI responses (Gemini / OpenAI):
+
+1. Copy `.env.example` → `.env` (in the project root)
+2. Edit `.env` and set your key:
+   ```
+   AI_API_KEY=your_key_here
+   LLM_PROVIDER=gemini   # or openai
+   ```
+3. Restart the backend server.
+
+Get a free Gemini key at [aistudio.google.com](https://aistudio.google.com/)
+
+---
+
+### URLs
+
+| Service  | URL                              |
+|----------|----------------------------------|
+| App UI   | http://localhost:5173            |
+| API Root | http://localhost:8000            |
+| API Docs | http://localhost:8000/docs       |
 
 ---
 

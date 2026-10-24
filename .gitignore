@@ -20,10 +20,15 @@ ENV/
 # dist/
 # build/
 
-# Environment & local configurations
+# Environment — keep the EXAMPLE, ignore the real secrets
 .env
 .env.local
 .env.*.local
+# Never ignore these setup files:
+!.env.example
+!requirements.txt
+!START.bat
+!package.json
 
 # IDE & OS files
 .vscode/
